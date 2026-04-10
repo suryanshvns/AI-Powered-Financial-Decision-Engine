@@ -1,0 +1,174 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans:
+    'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji';
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply antialiased;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .assist-app {
+    min-height: 100vh;
+    color: #0f172a;
+    background-color: #f1f5f9;
+    background-image:
+      radial-gradient(ellipse 140% 90% at 50% -30%, rgba(16, 185, 129, 0.14), transparent 55%),
+      radial-gradient(ellipse 70% 55% at 100% 20%, rgba(6, 182, 212, 0.1), transparent 50%),
+      radial-gradient(ellipse 55% 45% at 0% 85%, rgba(99, 102, 241, 0.07), transparent 45%),
+      linear-gradient(180deg, #f8fafc 0%, #f1f5f9 40%, #eef2f7 100%);
+  }
+
+  .assist-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  }
+
+  .assist-card {
+    border-radius: 1.125rem;
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    background: linear-gradient(165deg, #ffffff 0%, #fafbfc 48%, #f8fafc 100%);
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.04),
+      0 12px 32px -12px rgba(15, 23, 42, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+
+  .assist-card-glow {
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.04),
+      0 12px 32px -12px rgba(15, 23, 42, 0.1),
+      0 0 0 1px rgba(16, 185, 129, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .assist-header {
+    border-bottom: 1px solid #e2e8f0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(248, 250, 252, 0.88) 100%);
+  }
+
+  .assist-eyebrow {
+    @apply inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-slate-500;
+  }
+
+  .assist-eyebrow::before {
+    content: '';
+    @apply h-px w-8 rounded-full bg-linear-to-r from-transparent to-emerald-400/70;
+  }
+
+  .assist-title {
+    @apply font-extrabold tracking-tight;
+    font-size: clamp(1.65rem, 3.2vw, 2.15rem);
+    line-height: 1.15;
+    background: linear-gradient(120deg, #0f172a 0%, #134e4a 35%, #0e7490 70%, #0f172a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .assist-lede {
+    @apply mt-3 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-[15px];
+  }
+
+  .assist-nav-active {
+    @apply bg-linear-to-br from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-600/25;
+  }
+
+  .assist-nav-idle {
+    @apply text-slate-600 hover:bg-slate-100/90 hover:text-slate-900;
+  }
+
+  .assist-input {
+    @apply rounded-xl border border-slate-200/90 bg-white/90 px-3.5 py-2.5 text-sm text-slate-900 shadow-sm outline-none backdrop-blur-sm transition placeholder:text-slate-400 focus:border-emerald-400 focus:ring-4 focus:ring-emerald-500/15 disabled:opacity-50;
+  }
+
+  .assist-btn-primary {
+    @apply inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-linear-to-br from-emerald-600 to-teal-600 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-emerald-600/25 transition hover:brightness-105 hover:shadow-lg hover:shadow-emerald-600/20 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .assist-step-pill {
+    @apply inline-flex h-7 min-w-7 items-center justify-center rounded-lg bg-linear-to-br from-emerald-500/15 to-teal-500/10 px-2 text-xs font-extrabold text-emerald-800 ring-1 ring-emerald-500/20;
+  }
+
+  .assist-hero-panel {
+    border-radius: 1.5rem;
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(240, 253, 250, 0.5) 45%, rgba(236, 254, 255, 0.65) 100%);
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.04),
+      0 20px 50px -24px rgba(15, 23, 42, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .assist-section-shell {
+    border-radius: 1.35rem;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    background: linear-gradient(180deg, #ffffff 0%, #fafbfc 55%, #f8fafc 100%);
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.035),
+      0 16px 40px -20px rgba(15, 23, 42, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  }
+
+  .assist-jump-pill {
+    @apply rounded-full border border-slate-200/90 bg-white/90 px-3.5 py-1.5 text-xs font-bold text-slate-600 shadow-sm ring-1 ring-slate-100/80 transition hover:border-emerald-200 hover:bg-emerald-50/80 hover:text-emerald-900 hover:shadow-md hover:shadow-emerald-600/10;
+  }
+
+  .assist-mesh-accent {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 100% 0%, rgba(16, 185, 129, 0.12), transparent),
+      radial-gradient(ellipse 60% 40% at 0% 100%, rgba(6, 182, 212, 0.1), transparent);
+  }
+
+  .card-elevated {
+    @apply relative overflow-hidden rounded-[1.65rem] border border-white/[0.09] bg-slate-950/45 backdrop-blur-xl;
+    box-shadow:
+      0 0 0 1px rgba(13, 148, 136, 0.14),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
+      0 28px 56px -16px rgba(0, 0, 0, 0.55);
+  }
+
+  .card-head {
+    @apply shrink-0 border-b border-white/[0.08] bg-linear-to-br from-teal-950/70 via-slate-900/85 to-cyan-950/40 px-6 py-5 sm:px-8;
+  }
+
+  .card-head-compact {
+    @apply shrink-0 border-b border-white/[0.08] bg-linear-to-br from-teal-950/70 via-slate-900/85 to-cyan-950/40 px-5 py-4 sm:px-6;
+  }
+
+  .card-inset {
+    @apply bg-linear-to-b from-[#080f1c]/95 via-slate-950/80 to-[#0a1220]/90;
+  }
+
+  .card-panel {
+    @apply rounded-2xl border border-white/[0.08] bg-slate-950/40 ring-1 ring-white/[0.04];
+  }
+
+  .card-panel-head {
+    @apply shrink-0 border-b border-white/[0.08] bg-linear-to-br from-slate-900/90 via-teal-950/40 to-slate-900/80 px-5 py-3.5 sm:px-6;
+  }
+
+  .card-table-head {
+    @apply border-b border-white/[0.08] bg-linear-to-br from-teal-950/55 via-slate-900/90 to-cyan-950/35;
+  }
+}

@@ -1,0 +1,6 @@
+node_modules/
+transactions.csv
+.env
+.env.local
+*.log
+.DS_Store

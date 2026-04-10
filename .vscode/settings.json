@@ -1,0 +1,7 @@
+{
+  "tailwindCSS.lint.suggestCanonicalClasses": "ignore",
+  "tailwindCSS.experimental.configFile": "frontend/src/index.css",
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
+}

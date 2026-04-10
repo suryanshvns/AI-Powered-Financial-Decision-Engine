@@ -1,0 +1,29 @@
+{
+  "name": "financial-decision-engine-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:seed": "node scripts/seedTransactions.js",
+    "db:seed:demo": "node scripts/seedTransactions.js scripts/seed-data/demo-users-1-5.csv",
+    "db:schema": "node scripts/applySchema.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "http-errors": "^2.0.1",
+    "ioredis": "^5.4.1",
+    "pg": "^8.13.0",
+    "pino": "^10.3.1",
+    "pino-http": "^11.0.0"
+  },
+  "devDependencies": {
+    "pino-pretty": "^13.1.3"
+  }
+}

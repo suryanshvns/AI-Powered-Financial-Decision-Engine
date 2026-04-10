@@ -1,0 +1,118 @@
+user_id,date,amount,category,merchant,type
+1,2026-02-01,95000,Salary,Acme Corp Payroll,income
+1,2026-02-03,4200,Groceries,DMart,expense
+1,2026-02-05,1800,Food,Swiggy,expense
+1,2026-02-07,1200,Transport,Uber India,expense
+1,2026-02-10,3500,Bills,BESCOM Electricity,expense
+1,2026-02-14,900,Entertainment,Netflix India,expense
+1,2026-02-18,2800,Groceries,BigBasket,expense
+1,2026-02-22,1500,Food,Zomato,expense
+1,2026-02-25,800,Health,Apollo Pharmacy,expense
+1,2026-03-01,95000,Salary,Acme Corp Payroll,income
+1,2026-03-04,4500,Groceries,DMart,expense
+1,2026-03-08,1600,Food,Swiggy,expense
+1,2026-03-12,1100,Transport,Ola,expense
+1,2026-03-15,3200,Bills,Jio Postpaid,expense
+1,2026-03-19,750,Groceries,Blinkit,expense
+1,2026-03-22,1400,Food,EatSure,expense
+1,2026-03-26,950,Entertainment,Hotstar,expense
+1,2026-03-28,2100,Groceries,Reliance Smart,expense
+1,2026-04-01,95000,Salary,Acme Corp Payroll,income
+1,2026-04-03,3800,Groceries,DMart,expense
+1,2026-04-06,1300,Food,Swiggy,expense
+1,2026-04-09,1000,Transport,Metro Recharge,expense
+2,2026-02-15,40000,Salary,StartupCo Payroll,income
+2,2026-02-16,22000,Rent,Landlord UPI,expense
+2,2026-02-18,8500,Food,Swiggy,expense
+2,2026-02-19,12000,Shopping,Amazon India,expense
+2,2026-02-21,6500,Food,Zomato,expense
+2,2026-02-24,9000,Travel,MakeMyTrip,expense
+2,2026-02-26,5500,Shopping,Flipkart,expense
+2,2026-02-28,4500,Bills,BESCOM Electricity,expense
+2,2026-03-01,40000,Salary,StartupCo Payroll,income
+2,2026-03-02,22000,Rent,Landlord UPI,expense
+2,2026-03-05,11000,Food,Swiggy,expense
+2,2026-03-07,13500,Shopping,Nykaa,expense
+2,2026-03-10,7800,Food,Zomato,expense
+2,2026-03-12,16000,Shopping,Amazon India,expense
+2,2026-03-15,5200,Entertainment,BookMyShow,expense
+2,2026-03-18,4800,Utilities,PhonePe,expense
+2,2026-03-22,9200,Travel,IRCTC,expense
+2,2026-03-25,7000,Health,1mg,expense
+2,2026-03-28,6000,Shopping,Myntra,expense
+2,2026-04-01,40000,Salary,StartupCo Payroll,income
+2,2026-04-02,22000,Rent,Landlord UPI,expense
+2,2026-04-04,10500,Food,Swiggy,expense
+2,2026-04-06,14200,Shopping,Amazon India,expense
+2,2026-04-08,8800,Food,Zomato,expense
+3,2026-02-01,80000,Salary,BigTech Payroll,income
+3,2026-02-02,36000,Rent,Landlord UPI,expense
+3,2026-02-04,9500,Food,Swiggy,expense
+3,2026-02-06,8200,Groceries,BigBasket,expense
+3,2026-02-08,11000,Shopping,Amazon India,expense
+3,2026-02-10,4800,Bills,BWSSB Water,expense
+3,2026-02-12,4200,Transport,Uber India,expense
+3,2026-02-14,3500,Entertainment,Netflix India,expense
+3,2026-02-16,2800,Health,Apollo Pharmacy,expense
+3,2026-02-18,1500,Subscriptions,Spotify India,expense
+3,2026-03-01,80000,Salary,BigTech Payroll,income
+3,2026-03-02,36000,Rent,Landlord UPI,expense
+3,2026-03-04,9800,Food,Zomato,expense
+3,2026-03-06,8500,Groceries,DMart,expense
+3,2026-03-08,11500,Shopping,Flipkart,expense
+3,2026-03-10,5000,Bills,BESCOM Electricity,expense
+3,2026-03-12,4000,Transport,Ola,expense
+3,2026-03-14,3800,Entertainment,Hotstar,expense
+3,2026-03-16,2600,Health,1mg,expense
+3,2026-03-18,1600,Subscriptions,Spotify India,expense
+3,2026-03-20,2200,Utilities,Google Pay Bill,expense
+3,2026-04-01,80000,Salary,BigTech Payroll,income
+3,2026-04-02,36000,Rent,Landlord UPI,expense
+3,2026-04-04,10200,Food,Swiggy,expense
+3,2026-04-06,8000,Groceries,BigBasket,expense
+3,2026-04-08,11400,Shopping,Amazon India,expense
+4,2026-02-01,60000,Salary,ConsultCo Payroll,income
+4,2026-02-02,9800,Food,Swiggy,expense
+4,2026-02-04,9600,Food,Zomato,expense
+4,2026-02-06,9600,Food,EatSure,expense
+4,2026-02-08,6200,Groceries,DMart,expense
+4,2026-02-10,3500,Transport,Uber India,expense
+4,2026-02-12,4200,Bills,Jio Postpaid,expense
+4,2026-02-14,2800,Shopping,Amazon India,expense
+4,2026-03-01,60000,Salary,ConsultCo Payroll,income
+4,2026-03-02,9800,Food,Swiggy,expense
+4,2026-03-04,9600,Food,Zomato,expense
+4,2026-03-06,9600,Food,EatSure,expense
+4,2026-03-08,5500,Groceries,BigBasket,expense
+4,2026-03-10,3200,Transport,Ola,expense
+4,2026-03-12,4000,Bills,BESCOM Electricity,expense
+4,2026-03-14,2600,Shopping,Flipkart,expense
+4,2026-04-01,60000,Salary,ConsultCo Payroll,income
+4,2026-04-02,9800,Food,Swiggy,expense
+4,2026-04-04,9600,Food,Zomato,expense
+4,2026-04-06,9600,Food,EatSure,expense
+4,2026-04-08,4800,Groceries,Blinkit,expense
+5,2026-02-10,45000,Salary,Freelance Client A,income
+5,2026-02-11,800,Groceries,Blinkit,expense
+5,2026-02-14,600,Food,Swiggy,expense
+5,2026-02-18,900,Transport,Metro Recharge,expense
+5,2026-02-22,750,Bills,Jio Postpaid,expense
+5,2026-02-26,650,Groceries,DMart,expense
+5,2026-03-01,45000,Salary,Freelance Client A,income
+5,2026-03-02,700,Groceries,Blinkit,expense
+5,2026-03-05,500,Food,Zomato,expense
+5,2026-03-08,1200,Transport,Uber India,expense
+5,2026-03-11,28000,Shopping,Amazon India,expense
+5,2026-03-12,18500,Travel,MakeMyTrip,expense
+5,2026-03-14,12000,Shopping,Flipkart,expense
+5,2026-03-16,9500,Food,Swiggy,expense
+5,2026-03-18,8200,Entertainment,BookMyShow,expense
+5,2026-03-20,11000,Health,Apollo Pharmacy,expense
+5,2026-03-22,7500,Utilities,PhonePe,expense
+5,2026-03-25,13500,Shopping,Nykaa,expense
+5,2026-03-28,6000,Food,Zomato,expense
+5,2026-04-01,45000,Salary,Freelance Client A,income
+5,2026-04-03,22000,Shopping,Amazon India,expense
+5,2026-04-05,15000,Travel,IRCTC,expense
+5,2026-04-07,9800,Food,Swiggy,expense
+5,2026-04-09,12500,Shopping,Myntra,expense
