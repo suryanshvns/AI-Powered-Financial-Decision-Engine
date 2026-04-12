@@ -66,7 +66,7 @@ const predictCacheKey = (userId, rangeKey) => {
 
 const dashboardCacheKey = (userId, rangeKey) => {
   const r = rangeKey || 'all';
-  return `fde:dashboard:${userId}:${r}`;
+  return `fde:dashboard:v2:${userId}:${r}`;
 };
 
 const RANGE_KEYS = ['all', '7d', '30d', '90d'];

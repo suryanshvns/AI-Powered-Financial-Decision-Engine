@@ -6,6 +6,7 @@ import rulesRoutes from './rulesRoutes.js';
 import predictRoutes from './predictRoutes.js';
 import simulationRoutes from './simulationRoutes.js';
 import transactionsRoutes from './transactionsRoutes.js';
+import assistantRoutes from './assistantRoutes.js';
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use('/rules', rulesRoutes);
 router.use('/transactions', transactionsRoutes);
 router.use('/predict', predictRoutes);
 router.use('/simulate', simulationRoutes);
+router.use('/assistant', assistantRoutes);
 
 export default router;

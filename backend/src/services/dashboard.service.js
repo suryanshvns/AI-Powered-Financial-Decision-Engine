@@ -60,6 +60,7 @@ const getDashboardForUser = async (userId, rangeKey) => {
       ...(prediction.modelSkipped ? { modelSkipped: true } : {}),
     },
     insights,
+    features,
     category_breakdown: features.category_breakdown,
     transactions: current,
   };
