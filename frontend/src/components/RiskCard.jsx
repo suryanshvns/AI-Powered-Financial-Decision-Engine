@@ -75,6 +75,7 @@ const RiskCard = ({
   simulatedRisk,
   simulationPending,
   theme = 'light',
+  compact = false,
 }) => {
   const light = theme === 'light'
   const shell = light ? 'assist-card flex min-w-0 flex-col overflow-hidden' : 'card-elevated flex min-w-0 flex-col overflow-hidden'
@@ -87,7 +88,11 @@ const RiskCard = ({
   if (loading && !active) {
     return (
       <section className={shell}>
-        <CardHeader light={light} title="Risk insight" subtitle="Estimating risk from this user’s finances" />
+        <CardHeader
+          light={light}
+          title={compact ? 'Risk' : 'Risk insight'}
+          subtitle={compact ? 'Loading…' : 'Estimating risk from this user’s finances'}
+        />
         <Skeleton light={light} />
       </section>
     )
@@ -96,7 +101,11 @@ const RiskCard = ({
   if (!active) {
     return (
       <section className={shell}>
-        <CardHeader light={light} title="Risk insight" subtitle="Estimating risk from this user’s finances" />
+        <CardHeader
+          light={light}
+          title={compact ? 'Risk' : 'Risk insight'}
+          subtitle={compact ? 'Waiting for data' : 'Estimating risk from this user’s finances'}
+        />
         <div className={light ? 'bg-slate-50/80 px-6 py-10 sm:px-8' : 'card-inset px-6 py-10 sm:px-8'}>
           <div
             className={
@@ -115,11 +124,12 @@ const RiskCard = ({
     )
   }
 
-  const reasons = Array.isArray(active.reasons)
+  const reasonsRaw = Array.isArray(active.reasons)
     ? active.reasons
     : active.reason
       ? [active.reason]
       : []
+  const reasons = compact ? reasonsRaw.slice(0, 2) : reasonsRaw
   const sc = scoreOf(active)
   const scoreDisplay = sc != null ? sc.toFixed(2) : '—'
 
@@ -177,10 +187,15 @@ const RiskCard = ({
 
   return (
     <section className={shell}>
-      <CardHeader light={light} title="Risk insight" subtitle="Based on the loaded user’s profile" right={badges} />
+      <CardHeader
+        light={light}
+        title={compact ? 'Risk profile' : 'Risk insight'}
+        subtitle={compact ? 'Score, status, and why' : 'Based on the loaded user’s profile'}
+        right={badges}
+      />
 
       <div
-        className={`relative px-6 pb-6 pt-5 sm:px-8 ${light ? 'border-t border-slate-100 bg-white ring-1 ring-inset' : 'card-inset ring-1 ring-inset'} ${ringTint}`}
+        className={`relative ${compact ? 'px-5 pb-4 pt-4 sm:px-6' : 'px-6 pb-6 pt-5 sm:px-8'} ${light ? 'border-t border-slate-100 bg-white ring-1 ring-inset' : 'card-inset ring-1 ring-inset'} ${ringTint}`}
       >
         {!light ? (
           <div className="absolute right-6 top-4 h-24 w-24 rounded-full bg-teal-400/10 blur-2xl" aria-hidden />
@@ -196,11 +211,13 @@ const RiskCard = ({
       <div
         className={
           light
-            ? 'border-t border-slate-100 bg-slate-50/80 px-6 py-5 sm:px-8'
-            : 'border-t border-white/[0.08] bg-linear-to-b from-slate-950/50 to-teal-950/20 px-6 py-5 sm:px-8'
+            ? `border-t border-slate-100 bg-slate-50/80 ${compact ? 'px-5 py-4 sm:px-6' : 'px-6 py-5 sm:px-8'}`
+            : `border-t border-white/[0.08] bg-linear-to-b from-slate-950/50 to-teal-950/20 ${compact ? 'px-5 py-4 sm:px-6' : 'px-6 py-5 sm:px-8'}`
         }
       >
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Why the model said so</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+          {compact ? 'Explanation' : 'Why the model said so'}
+        </p>
         {reasons.length ? (
           <ul className="mt-3 space-y-2.5">
             {reasons.map((r, i) => (

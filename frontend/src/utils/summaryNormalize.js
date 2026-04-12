@@ -74,6 +74,7 @@ const buildAssistantSummaryLocally = ({ prediction, alerts, insights }) => {
     healthStatus,
     mainIssue,
     suggestedAction,
+    futurePrediction: null,
     simulationPreview: {
       projectedHealthScore: projected,
       message: `If you follow this plan, your score could reach around ${projected}.`,
@@ -110,6 +111,14 @@ const normalizeSummaryPayload = res => {
       : buildMainIssueFromAlertsAndReasons(d.alerts, d.prediction?.reasons)
 
   const sp = d.simulation_preview ?? d.simulationPreview
+  const fp = d.future_prediction ?? d.futurePrediction
+  const futureText =
+    typeof fp === 'string'
+      ? fp
+      : fp && typeof fp === 'object'
+        ? String(fp.message ?? fp.summary ?? '')
+        : ''
+
   const simulationPreview =
     sp && typeof sp === 'object'
       ? {
@@ -118,15 +127,21 @@ const normalizeSummaryPayload = res => {
         }
       : {
           projectedHealthScore: Math.min(100, (Number(d.health_score ?? d.healthScore) || 0) + 10),
-          message: 'Stick to the suggested action to improve your score.',
+          message: futureText || 'Stick to the suggested action to improve your score.',
         }
 
   const assistant = {
     healthScore: Math.round(Number(d.health_score ?? d.healthScore) || 0),
-    healthStatus: String(d.health_status ?? d.healthStatus ?? 'Moderate'),
+    healthStatus: String(d.health_status ?? d.healthStatus ?? d.status ?? 'Moderate'),
     mainIssue,
-    suggestedAction: String(d.suggested_action ?? d.suggestedAction ?? ''),
-    simulationPreview,
+    suggestedAction: String(d.suggested_action ?? d.suggestion ?? d.suggestedAction ?? ''),
+    simulationPreview: futureText
+      ? {
+          ...simulationPreview,
+          message: futureText || simulationPreview.message,
+        }
+      : simulationPreview,
+    futurePrediction: futureText || null,
   }
 
   return {

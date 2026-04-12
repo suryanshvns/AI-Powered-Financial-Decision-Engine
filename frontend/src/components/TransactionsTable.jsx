@@ -53,6 +53,8 @@ const TransactionsTable = ({
   loading,
   theme = 'light',
   embedded = false,
+  /** Taller scroll area for main dashboard (no short cap). */
+  expanded = false,
 }) => {
   const light = theme === 'light';
 
@@ -122,7 +124,11 @@ const TransactionsTable = ({
         </div>
       ) : (
         <div
-          className={`max-h-[min(420px,calc(100dvh-16rem))] min-h-[min(280px,40vh)] overflow-auto overscroll-contain ${inset}`}
+          className={
+            expanded
+              ? `min-h-[52vh] max-h-[min(88dvh,1400px)] overflow-auto overscroll-contain ${inset}`
+              : `max-h-[min(620px,calc(100dvh-12rem))] min-h-[min(380px,48vh)] overflow-auto overscroll-contain ${inset}`
+          }
         >
           <table className="w-full min-w-[640px] text-left text-sm">
             <thead>

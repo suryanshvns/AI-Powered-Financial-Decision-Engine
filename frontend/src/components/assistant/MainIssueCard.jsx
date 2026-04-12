@@ -51,12 +51,14 @@ const SeverityIcon = ({ severity }) => {
   )
 }
 
-const MainIssueCard = ({ title, detail, severity = 'warning' }) => {
+const MainIssueCard = ({ title, detail, severity = 'warning', minimal = false }) => {
   const key = styles[severity] ? severity : 'info'
   const s = styles[key]
 
   return (
-    <section className={`assist-card relative overflow-hidden p-6 shadow-md ring-1 sm:p-7 ${s.wrap}`}>
+    <section
+      className={`assist-card relative overflow-hidden p-6 shadow-sm sm:p-7 ${minimal ? 'ring-0' : 'shadow-md ring-1'} ${s.wrap}`}
+    >
       <div
         className="pointer-events-none absolute right-0 top-0 h-32 w-32 translate-x-1/3 -translate-y-1/3 rounded-full bg-white/40 blur-2xl"
         aria-hidden
@@ -69,7 +71,7 @@ const MainIssueCard = ({ title, detail, severity = 'warning' }) => {
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="assist-step-pill">2</span>
+            {!minimal ? <span className="assist-step-pill">2</span> : null}
             <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Main issue</p>
           </div>
           <h2 className={`mt-2 text-xl font-bold tracking-tight ${s.title}`}>{title}</h2>

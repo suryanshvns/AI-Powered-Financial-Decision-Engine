@@ -124,6 +124,13 @@ const getSummary = (userId, { days } = {}) => {
   return api.get(`/summary/${encodeURIComponent(id)}`, { params })
 }
 
+/** POST /assistant — rule-based assistant (optional on server). */
+const postAssistant = ({ query, userId }) =>
+  api.post('/assistant', {
+    query: String(query ?? '').trim(),
+    ...(userId != null && String(userId).trim() !== '' ? { user_id: String(userId).trim() } : {}),
+  })
+
 const simulate = ({ userId, reduceExpensePercent, increaseIncomePercent = 0 }) => {
   const user_id = Number(String(userId ?? '').trim())
   if (!Number.isInteger(user_id) || user_id < 1) {
@@ -159,5 +166,6 @@ export {
   getDashboard,
   getPrediction,
   getSummary,
+  postAssistant,
   simulate,
 }

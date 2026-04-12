@@ -42,12 +42,14 @@ const ScoreRing = ({ pct }) => {
   )
 }
 
-const HealthScoreCard = ({ score = 0, max = 100, status = 'Moderate' }) => {
+const HealthScoreCard = ({ score = 0, max = 100, status = 'Moderate', minimal = false }) => {
   const clamped = Math.min(max, Math.max(0, Number(score) || 0))
   const pct = max > 0 ? (clamped / max) * 100 : 0
 
   return (
-    <section className="assist-card assist-card-glow relative overflow-hidden p-8 sm:p-10">
+    <section
+      className={`assist-card relative overflow-hidden ${minimal ? 'p-6 sm:p-7' : 'assist-card-glow p-8 sm:p-10'}`}
+    >
       <div
         className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-emerald-400/15 blur-3xl"
         aria-hidden
@@ -57,40 +59,65 @@ const HealthScoreCard = ({ score = 0, max = 100, status = 'Moderate' }) => {
         aria-hidden
       />
 
-      <div className="relative flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
+      <div
+        className={`relative flex flex-col ${minimal ? 'gap-5 sm:flex-row sm:items-center sm:justify-between' : 'gap-8 sm:flex-row sm:items-center sm:justify-between'}`}
+      >
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="assist-step-pill">1</span>
+            {!minimal ? <span className="assist-step-pill">1</span> : null}
             <p className="text-sm font-semibold text-slate-600">Financial health score</p>
           </div>
-          <div className="mt-4 flex flex-wrap items-end gap-3">
-            <span className="text-5xl font-extrabold tracking-tight text-slate-900 sm:text-6xl">{clamped}</span>
+          <div className="mt-3 flex flex-wrap items-end gap-3">
+            <span className={`font-extrabold tracking-tight text-[#0f172a] ${minimal ? 'text-5xl sm:text-6xl' : 'text-5xl sm:text-6xl'}`}>
+              {clamped}
+            </span>
             <span className="pb-1.5 text-lg font-semibold text-slate-400">/{max}</span>
           </div>
-          <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-200/80 bg-linear-to-r from-emerald-50 to-teal-50 px-4 py-1.5 text-sm font-bold text-emerald-900 shadow-sm ring-1 ring-emerald-500/10">
+          <p className="mt-3 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-sm font-bold text-emerald-900">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-40 motion-reduce:animate-none" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              {!minimal ? (
+                <>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-40 motion-reduce:animate-none" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                </>
+              ) : (
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              )}
             </span>
             {status}
           </p>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-600">
-            Blends income, spending, and savings signals for this period — higher means more headroom.
-          </p>
+          {!minimal ? (
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-600">
+              Blends income, spending, and savings signals for this period — higher means more headroom.
+            </p>
+          ) : (
+            <p className="mt-2 text-sm text-slate-600">Higher is healthier for this window.</p>
+          )}
         </div>
 
-        <div className="flex flex-col items-center gap-4 sm:items-end">
-          <ScoreRing pct={pct} />
-          <div className="hidden w-full max-w-[200px] sm:block">
-            <div className="h-2 overflow-hidden rounded-full bg-slate-100 ring-1 ring-slate-200/80">
+        {!minimal ? (
+          <div className="flex flex-col items-center gap-4 sm:items-end">
+            <ScoreRing pct={pct} />
+            <div className="hidden w-full max-w-[200px] sm:block">
+              <div className="h-2 overflow-hidden rounded-full bg-slate-100 ring-1 ring-slate-200/80">
+                <div
+                  className="h-full rounded-full bg-linear-to-r from-emerald-500 via-teal-500 to-cyan-500 motion-safe:transition-all motion-safe:duration-500"
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+              <p className="mt-2 text-right text-xs font-medium text-slate-500">Higher is healthier</p>
+            </div>
+          </div>
+        ) : (
+          <div className="w-full max-w-[200px] sm:w-48">
+            <div className="h-2 overflow-hidden rounded-full bg-slate-100">
               <div
-                className="h-full rounded-full bg-linear-to-r from-emerald-500 via-teal-500 to-cyan-500 motion-safe:transition-all motion-safe:duration-500"
+                className="h-full rounded-full bg-emerald-500 motion-safe:transition-all motion-safe:duration-500"
                 style={{ width: `${pct}%` }}
               />
             </div>
-            <p className="mt-2 text-right text-xs font-medium text-slate-500">Higher is healthier</p>
           </div>
-        </div>
+        )}
       </div>
     </section>
   )

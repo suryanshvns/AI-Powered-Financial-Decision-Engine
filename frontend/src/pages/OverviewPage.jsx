@@ -1,22 +1,24 @@
+import { useMemo } from 'react'
 import AlertsBanner from '../components/AlertsBanner'
-import FinanceCharts from '../components/FinanceCharts'
+import AssistantChat from '../components/assistant/AssistantChat'
 import HealthScoreCard from '../components/assistant/HealthScoreCard'
-import InsightsPanel from '../components/InsightsPanel'
 import MainIssueCard from '../components/assistant/MainIssueCard'
 import SimulationPreview from '../components/assistant/SimulationPreview'
 import SuggestionCard from '../components/assistant/SuggestionCard'
-import KpiStrip from '../components/KpiStrip'
+import FinanceCharts from '../components/FinanceCharts'
 import RiskCard from '../components/RiskCard'
 import SimulationForm from '../components/SimulationForm'
 import TransactionsTable from '../components/TransactionsTable'
 import { useAppState } from '../context/useAppState'
 
-const SectionHeader = ({ kicker, title, description }) => (
-  <div className="mb-6 px-1">
-    <p className="assist-eyebrow">{kicker}</p>
-    <h2 className="assist-title mt-2 text-balance">{title}</h2>
-    {description ? <p className="assist-lede mt-2 max-w-2xl">{description}</p> : null}
-  </div>
+const scrollTop = 'scroll-mt-36 lg:scroll-mt-44'
+
+const SectionHeading = ({ kicker, title, description }) => (
+  <header className="mb-5 border-b border-slate-200 pb-4">
+    <p className="text-xs font-bold uppercase tracking-wider text-slate-500">{kicker}</p>
+    <h2 className="mt-1 text-2xl font-bold tracking-tight text-[#0f172a]">{title}</h2>
+    {description ? <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-600">{description}</p> : null}
+  </header>
 )
 
 const OverviewPage = () => {
@@ -40,96 +42,68 @@ const OverviewPage = () => {
 
   const hasUser = Boolean(activeUserId)
 
-  return (
-    <div className="space-y-12 pb-28 sm:space-y-14">
-      <div className="assist-hero-panel assist-mesh-accent relative overflow-hidden px-6 py-8 sm:px-10 sm:py-10">
-        <div
-          className="pointer-events-none absolute -right-24 top-0 h-56 w-56 rounded-full bg-emerald-300/20 blur-3xl"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute -bottom-16 left-0 h-44 w-44 rounded-full bg-cyan-300/15 blur-3xl"
-          aria-hidden
-        />
-        <div className="relative">
-          <p className="assist-eyebrow">Single workspace</p>
-          <h1 className="assist-title mt-3 max-w-3xl text-balance">Your financial picture, end to end</h1>
-          <p className="assist-lede mt-4 max-w-2xl text-pretty">
-            Health pulse, alerts, AI notes, interactive charts, scenario lab, and your full ledger — all here. Load a
-            user ID in the header and scroll or use the section chips.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3 text-xs font-semibold text-slate-600">
-            <span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1.5 shadow-sm ring-1 ring-slate-100">
-              Range-aware KPIs
-            </span>
-            <span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1.5 shadow-sm ring-1 ring-slate-100">
-              Live risk + simulation
-            </span>
-            <span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1.5 shadow-sm ring-1 ring-slate-100">
-              Recharts analytics
-            </span>
-          </div>
-        </div>
-      </div>
+  const secondaryInsight = useMemo(() => {
+    if (!Array.isArray(insights) || insights.length < 2) return ''
+    const x = insights[1]
+    return typeof x === 'string' ? x : String(x?.body ?? '')
+  }, [insights])
 
-      {dashboardError && hasUser ? (
-        <div
-          className="rounded-2xl border border-rose-200 bg-rose-50/90 px-5 py-4 text-sm text-rose-900 shadow-sm ring-1 ring-rose-100"
-          role="alert"
-        >
-          <p className="font-bold">Could not refresh</p>
-          <p className="mt-1 text-rose-800/90">{dashboardError}</p>
+  const primaryInsight = useMemo(() => {
+    if (!Array.isArray(insights) || !insights.length) return ''
+    const x = insights[0]
+    return typeof x === 'string' ? x : String(x?.body ?? '')
+  }, [insights])
+
+  const futureMessage = useMemo(() => {
+    if (!assistantSummary) return ''
+    const fp = assistantSummary.futurePrediction
+    const sp = assistantSummary.simulationPreview
+    if (fp) return fp
+    const base = sp?.message ?? ''
+    if (secondaryInsight && !base.includes(secondaryInsight.slice(0, 20))) {
+      return [base, secondaryInsight].filter(Boolean).join(' ')
+    }
+    return base || primaryInsight
+  }, [assistantSummary, primaryInsight, secondaryInsight])
+
+  return (
+    <div className="mx-auto w-full max-w-7xl space-y-14 pb-28 sm:space-y-16">
+      {!hasUser ? (
+        <div className="fa-surface mx-auto max-w-2xl px-8 py-14 text-center sm:py-16">
+          <p className="text-xl font-bold text-[#0f172a]">Financial assistant</p>
+          <p className="mt-3 text-base leading-relaxed text-slate-600">
+            Enter a user ID above and tap <span className="font-semibold text-emerald-700">Load workspace</span> for
+            your full snapshot — health score, guidance, charts, and ledger in one scrollable view.
+          </p>
         </div>
       ) : null}
 
-      {!hasUser ? (
-        <div className="assist-section-shell relative overflow-hidden px-6 py-16 text-center sm:px-12 sm:py-20">
-          <div
-            className="pointer-events-none absolute -right-20 top-0 h-52 w-52 rounded-full bg-violet-200/25 blur-3xl"
-            aria-hidden
-          />
-          <div className="relative mx-auto flex max-w-lg flex-col items-center">
-            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-linear-to-br from-slate-100 via-white to-emerald-50 text-4xl shadow-lg ring-1 ring-slate-200/80">
-              ◎
-            </div>
-            <p className="text-xl font-extrabold text-slate-900">No workspace loaded</p>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600">
-              Enter a user ID above and choose <span className="font-bold text-emerald-700">Load workspace</span> to
-              populate scores, charts, scenarios, and transactions on this page.
-            </p>
-          </div>
+      {dashboardError && hasUser ? (
+        <div
+          className="fa-surface border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-950"
+          role="alert"
+        >
+          <p className="font-semibold">Could not refresh</p>
+          <p className="mt-1 text-amber-900/90">{dashboardError}</p>
         </div>
-      ) : loading && !assistantSummary ? (
-        <div className="assist-section-shell space-y-6 p-8 sm:p-10">
-          <div className="flex items-center gap-4">
-            <div className="h-14 w-14 animate-pulse rounded-2xl bg-linear-to-br from-emerald-100 to-teal-100" />
-            <div className="flex-1 space-y-2">
-              <div className="h-4 w-48 animate-pulse rounded-md bg-slate-200" />
-              <div className="h-3 w-64 animate-pulse rounded-md bg-slate-100" />
-            </div>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[1, 2, 3, 4].map(i => (
-              <div key={i} className="h-24 animate-pulse rounded-2xl bg-slate-100/90" />
-            ))}
-          </div>
-          <div className="h-40 animate-pulse rounded-2xl bg-slate-100/80" />
-          <div className="h-32 animate-pulse rounded-2xl bg-slate-100/80" />
+      ) : null}
+
+      {!hasUser ? null : loading && !assistantSummary ? (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="fa-surface h-44 animate-pulse bg-slate-100/90 sm:col-span-2" />
+          <div className="fa-surface h-44 animate-pulse bg-slate-100/90" />
+          <div className="fa-surface h-32 animate-pulse bg-slate-100/90 sm:col-span-2 lg:col-span-3" />
         </div>
       ) : assistantSummary ? (
         <>
-          <div className="scroll-mt-28 lg:scroll-mt-36">
-            <KpiStrip transactions={filteredTransactions} theme="light" />
-          </div>
-
-          <section id="pulse" className="scroll-mt-28 space-y-6 lg:scroll-mt-36">
-            <SectionHeader
-              kicker="Assistant pulse"
-              title="Guided readout"
-              description="Score, priority issue, recommended move, and a forward-looking hint — tuned to your selected time window."
+          <section id="assistant" className={`${scrollTop} space-y-6`}>
+            <SectionHeading
+              kicker="Snapshot"
+              title="Assistant readout"
+              description="Health score, what matters most, a concrete next step, and outlook — tuned to your selected range."
             />
-            <div className="grid gap-6 xl:grid-cols-2">
-              <div className="space-y-6">
+            <div className="grid gap-6 xl:grid-cols-12 xl:items-start xl:gap-8">
+              <div className="space-y-5 xl:col-span-7">
                 <HealthScoreCard
                   score={assistantSummary.healthScore}
                   max={100}
@@ -140,49 +114,44 @@ const OverviewPage = () => {
                   detail={assistantSummary.mainIssue.detail}
                   severity={assistantSummary.mainIssue.severity}
                 />
-              </div>
-              <div className="space-y-6">
                 <SuggestionCard text={assistantSummary.suggestedAction} />
                 <SimulationPreview
+                  kicker="Future prediction"
                   projectedScore={assistantSummary.simulationPreview?.projectedHealthScore}
-                  message={assistantSummary.simulationPreview?.message}
+                  message={futureMessage}
                 />
-              </div>
-            </div>
-          </section>
-
-          <section id="signals" className="scroll-mt-28 space-y-6 lg:scroll-mt-36">
-            <SectionHeader
-              kicker="Signals & guidance"
-              title="Alerts and AI insights"
-              description="Anything that needs attention first, plus pattern-level notes when the API returns them."
-            />
-            <div className="assist-section-shell space-y-10 p-6 sm:p-8 lg:p-10">
-              <div>
-                <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-500">Alerts</h3>
-                <div className="mt-4">
-                  <AlertsBanner alerts={alerts} theme="light" />
-                  {!alerts?.length ? (
-                    <p className="text-sm text-slate-500">No active alerts for this window.</p>
-                  ) : null}
-                </div>
-              </div>
-              <div className="border-t border-slate-200/80 pt-10">
-                <InsightsPanel insights={insights} theme="light" />
-                {!insights?.length ? (
-                  <p className="text-sm text-slate-500">
-                    No extra insights yet — charts and ledger below still reflect your data.
+                {primaryInsight && !assistantSummary.futurePrediction ? (
+                  <p className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm leading-relaxed text-slate-700 shadow-sm">
+                    {primaryInsight}
                   </p>
                 ) : null}
               </div>
+              <div className="min-w-0 xl:col-span-5">
+                <AssistantChat userId={activeUserId} disabled={loading} />
+              </div>
             </div>
           </section>
 
-          <section id="charts" className="scroll-mt-28 space-y-6 lg:scroll-mt-36">
-            <SectionHeader
+          <section id="alerts" className={`${scrollTop} space-y-4`}>
+            <SectionHeading
+              kicker="Signals"
+              title="Alerts"
+              description="Anything that needs attention for this window."
+            />
+            {alerts?.length ? (
+              <AlertsBanner alerts={alerts} theme="light" />
+            ) : (
+              <p className="rounded-xl border border-slate-200 bg-white px-5 py-6 text-sm text-slate-600 shadow-sm">
+                No alerts for this period.
+              </p>
+            )}
+          </section>
+
+          <section id="charts" className={`${scrollTop} space-y-4`}>
+            <SectionHeading
               kicker="Analytics"
               title="Income, mix, and flow"
-              description="Bar, pie, and trend views for the same range as your header control. Amounts in ₹."
+              description={`Figures for the last ${timeRangeDays} days (₹).`}
             />
             <FinanceCharts
               transactions={filteredTransactions}
@@ -193,13 +162,27 @@ const OverviewPage = () => {
             />
           </section>
 
-          <section id="lab" className="scroll-mt-28 space-y-6 lg:scroll-mt-36">
-            <SectionHeader
-              kicker="Scenario lab"
-              title="Risk profile & what-if"
-              description="Baseline assessment from the model, then adjust spending or income to preview an alternate outcome."
+          <section id="ledger" className={`${scrollTop} space-y-4`}>
+            <SectionHeading
+              kicker="Ledger"
+              title="Transactions"
+              description="Every row in scope for the loaded user — newest first."
             />
-            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:items-start">
+            <TransactionsTable
+              transactions={filteredTransactions}
+              loading={loading}
+              theme="light"
+              expanded
+            />
+          </section>
+
+          <section id="lab" className={`${scrollTop} space-y-6`}>
+            <SectionHeading
+              kicker="Scenario lab"
+              title="What-if simulator"
+              description="Adjust spending or income and compare to your current risk readout."
+            />
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-start">
               <div className="min-w-0">
                 <RiskCard
                   prediction={prediction}
@@ -209,7 +192,7 @@ const OverviewPage = () => {
                   theme="light"
                 />
               </div>
-              <div className="min-w-0 lg:sticky lg:top-[7.5rem]">
+              <div className="min-w-0 lg:sticky lg:top-44">
                 <SimulationForm
                   userId={activeUserId || userIdInput}
                   baselinePrediction={prediction}
@@ -221,25 +204,13 @@ const OverviewPage = () => {
               </div>
             </div>
           </section>
-
-          <section id="ledger" className="scroll-mt-28 space-y-6 lg:scroll-mt-36">
-            <SectionHeader
-              kicker="Ledger"
-              title="Transactions"
-              description="Every row in scope for the loaded user and selected range — newest first."
-            />
-            <TransactionsTable
-              transactions={filteredTransactions}
-              loading={loading}
-              theme="light"
-            />
-          </section>
         </>
       ) : (
-        <div className="assist-section-shell px-6 py-14 text-center sm:px-10">
-          <p className="text-lg font-bold text-slate-800">Summary unavailable</p>
-          <p className="mx-auto mt-2 max-w-md text-sm text-slate-600">
-            Couldn’t build a brief for this user. Try another ID or confirm the summary API is running.
+        <div className="fa-surface mx-auto max-w-lg px-6 py-12 text-center">
+          <p className="text-lg font-semibold text-[#0f172a]">Summary unavailable</p>
+          <p className="mt-2 text-sm text-slate-600">
+            Try another user ID or confirm <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs">GET /summary</code>{' '}
+            is running.
           </p>
         </div>
       )}

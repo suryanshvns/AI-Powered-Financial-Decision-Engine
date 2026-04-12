@@ -1,8 +1,10 @@
-const SuggestionCard = ({ text }) => {
+const SuggestionCard = ({ text, minimal = false }) => {
   if (!text) return null
 
   return (
-    <section className="assist-card relative overflow-hidden border-amber-200/60 bg-linear-to-br from-amber-50/40 via-white to-orange-50/20 p-6 shadow-md ring-1 ring-amber-100/80 sm:p-7">
+    <section
+      className={`assist-card relative overflow-hidden border-amber-200/70 bg-amber-50/50 p-6 sm:p-7 ${minimal ? 'shadow-sm' : 'shadow-md ring-1 ring-amber-100/80'}`}
+    >
       <div
         className="pointer-events-none absolute -left-8 top-1/2 h-36 w-36 -translate-y-1/2 rounded-full bg-amber-200/25 blur-3xl"
         aria-hidden
@@ -19,13 +21,19 @@ const SuggestionCard = ({ text }) => {
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="assist-step-pill">3</span>
-            <p className="text-xs font-bold uppercase tracking-wider text-amber-800/80">Suggested action</p>
+            {!minimal ? <span className="assist-step-pill">3</span> : null}
+            <p className="text-xs font-bold uppercase tracking-wider text-amber-900/80">Suggested action</p>
           </div>
-          <p className="mt-2 text-[15px] font-medium leading-relaxed text-slate-800">
-            <span className="text-2xl font-light leading-none text-amber-400/90">&ldquo;</span>
-            {text}
-            <span className="text-2xl font-light leading-none text-amber-400/90">&rdquo;</span>
+          <p className="mt-2 text-[15px] font-medium leading-relaxed text-[#0f172a]">
+            {!minimal ? (
+              <>
+                <span className="text-2xl font-light leading-none text-amber-400/90">&ldquo;</span>
+                {text}
+                <span className="text-2xl font-light leading-none text-amber-400/90">&rdquo;</span>
+              </>
+            ) : (
+              text
+            )}
           </p>
         </div>
       </div>
