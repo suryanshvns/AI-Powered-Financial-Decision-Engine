@@ -12,4 +12,4 @@ EXPLAIN_HIGH_FREQUENCY: Final[float] = 3.0
 EXPLAIN_TIGHT_CASHFLOW_EXPENSE_SHARE: Final[float] = 0.85
 EXPLAIN_ROLLING_VS_INCOME: Final[float] = 0.25
 
-RISK_LEVELS_ORDERED: Final[tuple[str, ...]] = ("LOW", "MEDIUM", "HIGH", "CRITICAL")
+RISK_LEVELS_ORDERED: Final[tuple[str, ...]] = ("LOW", "MODERATE", "HIGH", "CRITICAL")

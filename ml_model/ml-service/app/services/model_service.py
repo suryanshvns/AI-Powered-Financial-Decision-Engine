@@ -85,20 +85,27 @@ def shap_explainer_for_risk_model() -> Any | None:
 
 
 def predict_risk(feature_vector: list[float]) -> tuple[str, float]:
+    label, _, score = predict_risk_detail(feature_vector)
+    return label, score
+
+
+def predict_risk_detail(feature_vector: list[float]) -> tuple[str, dict[str, float], float]:
     bundle = get_bundle()
     model = bundle["risk_classifier"]
     x = np.asarray([feature_vector], dtype=np.float64)
     pred = str(model.predict(x)[0])
     proba = model.predict_proba(x)[0]
+    classes = [str(c) for c in model.classes_.tolist()]
+    by_class = {classes[i]: float(proba[i]) for i in range(len(classes))}
     score = float(np.max(proba))
     if logger.isEnabledFor(logging.DEBUG):
         logger.debug(
-            "predict_risk: class=%s score=%.4f feature_dim=%s",
+            "predict_risk_detail: class=%s score=%.4f feature_dim=%s",
             pred,
             score,
             len(feature_vector),
         )
-    return pred, score
+    return pred, by_class, score
 
 
 def predict_anomaly(feature_vector: list[float]) -> bool:

@@ -39,14 +39,15 @@ class PredictRequest(BaseModel):
     transactions: list[TransactionIn] = Field(..., min_length=1)
 
 
-RiskLevel = Literal["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+RiskLevel = Literal["LOW", "MODERATE", "HIGH", "CRITICAL"]
 
 
 class PredictResponse(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    risk: RiskLevel
-    score: float = Field(..., ge=0.0, le=1.0)
+    risk_score: float = Field(..., ge=0.0, le=100.0)
+    risk_level: RiskLevel
     anomaly: bool
-    features: dict[str, Any]
     reasons: list[str] = Field(default_factory=list)
+    features: dict[str, Any]
+    feature_importance: dict[str, float] = Field(default_factory=dict)
